@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "22775279262",
+    "project_id": "philjobnet-project",
+    "storage_bucket": "philjobnet-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22775279262:android:574758d59062b1062a558f",
+        "android_client_info": {
+          "package_name": "com.example.philjobnet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4LK_o81S9oO_fWq6WHHi3HdBZ5V5Ysrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

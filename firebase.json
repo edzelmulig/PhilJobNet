@@ -1,0 +1,25 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "philjobnet-project",
+          "appId": "1:22775279262:android:574758d59062b1062a558f",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "philjobnet-project",
+          "configurations": {
+            "android": "1:22775279262:android:574758d59062b1062a558f",
+            "ios": "1:22775279262:ios:99df2dea3573c8762a558f",
+            "macos": "1:22775279262:ios:99df2dea3573c8762a558f",
+            "web": "1:22775279262:web:86e855161de0c1332a558f",
+            "windows": "1:22775279262:web:f23539133cad49d92a558f"
+          }
+        }
+      }
+    }
+  }
+}
