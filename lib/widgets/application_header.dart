@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ApplicationHeader extends StatelessWidget {
-  const ApplicationHeader({super.key});
+  final double paddingTop;
+  final double paddingBottom;
+
+  const ApplicationHeader({
+    super.key,
+    required this.paddingTop,
+    required this.paddingBottom,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +22,7 @@ class ApplicationHeader extends StatelessWidget {
           // 1. Application logo
           Center(
             child: Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 10),
+              margin: EdgeInsets.only(top: paddingTop, bottom: paddingBottom),
               decoration: const BoxDecoration(
                 color: Color(0xFF212024),
               ),
