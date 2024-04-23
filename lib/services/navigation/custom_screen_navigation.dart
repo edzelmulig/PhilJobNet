@@ -36,4 +36,9 @@ class NavigationService {
       (_) => false, // Clear all previous routes
     );
   }
+
+  // NAVIGATE BACK TO THE FIRST SCREEN
+  static popUntilFirst(BuildContext context) {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
 }

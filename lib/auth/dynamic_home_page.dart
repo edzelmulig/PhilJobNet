@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:philjobnet/auth/login_screen.dart';
 import 'package:philjobnet/client/home_page.dart';
+import 'package:philjobnet/employeer/navigation/bottom_navigation.dart';
 
 class DynamicHomePage extends StatefulWidget {
   const DynamicHomePage({super.key});
@@ -63,17 +64,17 @@ class _DynamicHomePage extends State<DynamicHomePage> {
           );
         }
 
-        // Retrieve userType from the snapshot
+        // PRINT USER TYPE
         final userType = snapshot.data!.get('userType');
-        debugPrint("++++ $userType");
+        debugPrint("USER TYPE: $userType");
 
-        // Check userType and navigate to the corresponding home page
+        // NAVIGATE TO DESIRED SCREEN
         if (userType == 'client') {
-          return const HomePage(); // Navigate to client home page
-        } else if (userType == 'Provider') {
-          return const HomePage(); // Navigate to service provider home page
+          return const HomePage();
+        } else if (userType == 'employer') {
+          return const BottomNavigation();
         } else {
-          // Handle unknown userType (if needed)
+          // DISPLAY IF USER TYPE IS UNKNOWN
           return const Center(
             child: Text('Unknown user type'),
           );

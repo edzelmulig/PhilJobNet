@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:philjobnet/auth/login_screen.dart';
 import 'package:philjobnet/auth/singup_using_screen.dart';
-import 'package:philjobnet/services/navigation/custom_navigation.dart';
-import 'package:philjobnet/widgets/application_footer.dart';
-import 'package:philjobnet/widgets/application_header.dart';
-import 'package:philjobnet/widgets/custom_button.dart';
-import 'package:philjobnet/widgets/custom_role_selection.dart';
+import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
+import 'package:philjobnet/widgets/fotter/application_footer.dart';
+import 'package:philjobnet/widgets/header/application_header.dart';
+import 'package:philjobnet/widgets/button/custom_button.dart';
+import 'package:philjobnet/widgets/button/custom_role_selection.dart';
 
 class AccountType extends StatefulWidget {
   const AccountType({super.key});

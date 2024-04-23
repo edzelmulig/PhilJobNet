@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:philjobnet/auth/account_type.dart';
 import 'package:philjobnet/auth/forgot_password_screen.dart';
 import 'package:philjobnet/services/auth/firebase_auth_services.dart';
-import 'package:philjobnet/services/navigation/custom_navigation.dart';
+import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
-import 'package:philjobnet/widgets/application_description.dart';
-import 'package:philjobnet/widgets/application_header.dart';
-import 'package:philjobnet/widgets/custom_button.dart';
-import 'package:philjobnet/widgets/custom_label.dart';
-import 'package:philjobnet/widgets/custom_text_button.dart';
-import 'package:philjobnet/widgets/custom_text_field.dart';
+import 'package:philjobnet/widgets/static_widgets/application_description.dart';
+import 'package:philjobnet/widgets/header/application_header.dart';
+import 'package:philjobnet/widgets/button/custom_button.dart';
+import 'package:philjobnet/widgets/static_widgets/custom_label.dart';
+import 'package:philjobnet/widgets/button/custom_text_button.dart';
+import 'package:philjobnet/widgets/text_field/custom_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

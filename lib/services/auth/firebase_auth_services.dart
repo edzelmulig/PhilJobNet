@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:philjobnet/auth/dynamic_home_page.dart';
 import 'package:philjobnet/auth/login_screen.dart';
-import 'package:philjobnet/services/navigation/custom_navigation.dart';
+import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
 import 'package:philjobnet/utils/loading_indicator/custom_loading_indicator.dart';
 import 'package:email_validator/email_validator.dart';
@@ -174,8 +174,14 @@ class AuthService {
               const Color(0xFF3499da),
             );
           }
-        } on FirebaseAuthException catch (e) {
-          print(e);
+        } on FirebaseAuthException catch (error) {
+          if(context.mounted) {
+            customFloatingSnackBar(
+              context,
+              "Error $error",
+              const Color(0xFFe91b4f),
+            );
+          }
         }
       } else {
         customFloatingSnackBar(

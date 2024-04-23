@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:philjobnet/auth/login_screen.dart';
 import 'package:philjobnet/auth/signup_screen.dart';
-import 'package:philjobnet/services/navigation/custom_navigation.dart';
+import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
-import 'package:philjobnet/widgets/application_footer.dart';
-import 'package:philjobnet/widgets/application_header_with_text.dart';
-import 'package:philjobnet/widgets/custom_button_with_icon.dart';
+import 'package:philjobnet/widgets/fotter/application_footer.dart';
+import 'package:philjobnet/widgets/header/application_header_with_text.dart';
+import 'package:philjobnet/widgets/button/custom_button_with_icon.dart';
 
 class SignUpUsingScreen extends StatefulWidget {
   // PARAMETERS NEEDED

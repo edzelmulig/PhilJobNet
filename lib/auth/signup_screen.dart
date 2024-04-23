@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:philjobnet/auth/login_screen.dart';
 import 'package:philjobnet/services/auth/firebase_auth_services.dart';
-import 'package:philjobnet/services/navigation/custom_navigation.dart';
+import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
-import 'package:philjobnet/widgets/application_footer.dart';
-import 'package:philjobnet/widgets/application_header_with_text.dart';
-import 'package:philjobnet/widgets/custom_button.dart';
-import 'package:philjobnet/widgets/custom_label.dart';
-import 'package:philjobnet/widgets/custom_text_field.dart';
+import 'package:philjobnet/widgets/fotter/application_footer.dart';
+import 'package:philjobnet/widgets/header/application_header_with_text.dart';
+import 'package:philjobnet/widgets/button/custom_button.dart';
+import 'package:philjobnet/widgets/static_widgets/custom_label.dart';
+import 'package:philjobnet/widgets/text_field/custom_text_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   final String accountType;

@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:philjobnet/auth/login_screen.dart';
-import 'package:philjobnet/services/navigation/custom_navigation.dart';
-
+import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 

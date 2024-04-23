@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:philjobnet/widgets/application_header.dart';
+import 'package:philjobnet/widgets/header/application_header.dart';
 
 class ApplicationHeaderWithText extends StatelessWidget {
   const ApplicationHeaderWithText({super.key});
