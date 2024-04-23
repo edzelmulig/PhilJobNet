@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/widgets/header/application_header_appbar.dart';
 import 'package:philjobnet/widgets/static_widgets/custom_under_development.dart';
 
@@ -14,7 +13,7 @@ class NotificationScreen extends StatelessWidget {
         if (_) {
           return;
         }
-        NavigationService.popUntilFirst(context);
+        Navigator.of(context).popUntil((route) => route.isFirst);
       },
       child: Scaffold(
         appBar: PreferredSize(

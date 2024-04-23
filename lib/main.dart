@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:philjobnet/auth/login_screen.dart';
+import 'package:philjobnet/auth/auth_check.dart';
 import 'package:philjobnet/firebase_options.dart';
 
 void main() async {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: MainPage(),
     );
   }
 }

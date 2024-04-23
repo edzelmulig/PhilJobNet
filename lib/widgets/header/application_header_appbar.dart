@@ -24,24 +24,27 @@ class HeaderAppBar extends StatelessWidget {
       ),
       actions: [
         // LOGOUT BUTTON
-        Container(
-          padding: const EdgeInsets.only(right: 5),
-          child: IconButton(
-            style: IconButton.styleFrom(
-              foregroundColor: Colors.white,
-            ),
-            onPressed: () async {
-              // LOG OUT, NAVIGATE TO LOGIN PAGE
-              FirebaseAuth.instance.signOut();
-              await NavigationService.removeAllAndPush(
-                context,
-                const LoginScreen(),
-              );
-            },
-            icon: const ImageIcon(
-              AssetImage('images/logout.png'),
-              color: Color(0xFFfefeff),
-              size: 22,
+        Tooltip(
+          message: "Logout",
+          child: Container(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              style: IconButton.styleFrom(
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () async {
+                // LOG OUT, NAVIGATE TO LOGIN PAGE
+                FirebaseAuth.instance.signOut();
+                await NavigationService.removeAllAndPush(
+                  context,
+                  const LoginScreen(),
+                );
+              },
+              icon: const ImageIcon(
+                AssetImage('images/logout.png'),
+                color: Color(0xFFfefeff),
+                size: 22,
+              ),
             ),
           ),
         ),

@@ -88,7 +88,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       const SizedBox(height: 10),
                       // LOGIN BUTTON
                       PrimaryCustomButton(
-                        buttonText: "Login",
+                        buttonText: "Reset Password",
                         onPressed: performPasswordReset,
                         buttonHeight: 55,
                         buttonColor: const Color(0xFF3499da),
