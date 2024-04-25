@@ -5,6 +5,7 @@ import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/widgets/fotter/application_footer.dart';
 import 'package:philjobnet/widgets/header/application_header.dart';
 import 'package:philjobnet/widgets/button/custom_button.dart';
+import 'package:philjobnet/widgets/static_widgets/custom_label.dart';
 import 'package:philjobnet/widgets/text_field/custom_text_field.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -49,7 +50,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               const ApplicationHeader(paddingTop: 10, paddingBottom: 10),
               // SPACING
               const SizedBox(height: 30),
-              _buildTextTitle(),
+              // TEXT: SCREEN TITLE
+              _buildTitleText(),
               // SPACING
               const SizedBox(height: 13),
               // TEXT: ACCOUNT TYPE
@@ -112,6 +114,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
+  Widget _buildTitleText() {
+    return const Padding(
+      padding: EdgeInsets.only(left: 25),
+      child: CustomLabel(
+        textLabel: "Reset password",
+        fontSize: 25,
+        fontWeight: FontWeight.w900,
+        fontColor: Color(0xFF242424),
+        letterSpacing: 0.5,
+      ),
+    );
+  }
+
   Widget _buildForgotPasswordText() {
     return Padding(
       padding: const EdgeInsets.only(left: 25),
@@ -141,19 +156,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  Widget _buildTextTitle() {
-    return const Padding(
-      padding: EdgeInsets.only(left: 25),
-      child: Text(
-        "Forgot account",
-        style: TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.w900,
-          letterSpacing: 0.5,
-        ),
-      ),
-    );
-  }
 
   // WIDGET TO NAVIGATE LOGIN SCREEN
   Widget _buildSignIn(BuildContext context) {

@@ -101,12 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         // LABEL: Email/Username
-                        const CustomLabel(
-                          textLabel: "Email/Username",
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          fontColor: Color(0xFF242424),
-                        ),
+                        _buildLabel("Email/Username"),
                         // SIZED BOX: SPACING
                         const SizedBox(height: 2),
                         // EMAIL/USERNAME TEXT FIELD
@@ -130,12 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         // SPACING
                         const SizedBox(height: 10),
                         // LABEL: Email/Username
-                        const CustomLabel(
-                          textLabel: "Password",
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          fontColor: Color(0xFF242424),
-                        ),
+                        _buildLabel("Password"),
                         // SIZED BOX: SPACING
                         const SizedBox(height: 2),
                         // PASSWORD TEXT FIELD
@@ -220,6 +210,16 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+
+// WIDGET FOR LABEL
+Widget _buildLabel(String textLabel) {
+  return CustomLabel(
+    textLabel: textLabel,
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    fontColor: const Color(0xFF242424),
+  );
 }
 
 // Widget for Sign up

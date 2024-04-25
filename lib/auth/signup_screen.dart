@@ -95,17 +95,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // TEXT: SIGN UP USING EMAIL
-                      _buildTextTitle(),
+                      // TEXT: SCREEN TITLE
+                      _buildTitleText(),
                       // SPACING
                       const SizedBox(height: 13),
                       // LABEL: Email/Username
-                      const CustomLabel(
-                        textLabel: "Email",
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        fontColor: Color(0xFF242424),
-                      ),
+                      _buildLabel("Email"),
                       // SIZED BOX: SPACING
                       const SizedBox(height: 2),
                       // EMAIL/USERNAME TEXT FIELD
@@ -129,12 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // SPACING
                       const SizedBox(height: 5),
                       // LABEL: Email/Username
-                      const CustomLabel(
-                        textLabel: "Password",
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        fontColor: Color(0xFF242424),
-                      ),
+                      _buildLabel("Password"),
                       // SIZED BOX: SPACING
                       const SizedBox(height: 2),
                       // PASSWORD TEXT FIELD
@@ -158,12 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // SPACING
                       const SizedBox(height: 5),
                       // LABEL: Email/Username
-                      const CustomLabel(
-                        textLabel: "Confirm Password",
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        fontColor: Color(0xFF242424),
-                      ),
+                      _buildLabel("Confirm Password"),
                       // SIZED BOX: SPACING
                       const SizedBox(height: 2),
                       // PASSWORD TEXT FIELD
@@ -220,14 +205,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _buildTextTitle() {
-    return const Text(
-      "Create account",
-      style: TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.w900,
-        letterSpacing: 0.5,
-      ),
+  // WIDGET FOR LABEL
+  Widget _buildLabel(String textLabel) {
+    return CustomLabel(
+      textLabel: textLabel,
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+      fontColor: const Color(0xFF242424),
+    );
+  }
+
+  // WIDGET FOR SCREEN TITLE
+  Widget _buildTitleText() {
+    return const CustomLabel(
+      textLabel: "Create account",
+      fontSize: 25,
+      fontWeight: FontWeight.w900,
+      fontColor: Color(0xFF242424),
+      letterSpacing: 0.5,
     );
   }
 

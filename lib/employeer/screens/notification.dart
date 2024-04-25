@@ -18,7 +18,7 @@ class NotificationScreen extends StatelessWidget {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-          child: const HeaderAppBar(),
+          child: const HeaderAppBar(withLogoutIcon: true),
         ),
         body: const UnderDevelopment(),
       ),

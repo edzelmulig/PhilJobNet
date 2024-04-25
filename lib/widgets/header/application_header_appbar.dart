@@ -5,11 +5,17 @@ import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/widgets/header/application_header.dart';
 
 class HeaderAppBar extends StatelessWidget {
-  const HeaderAppBar({super.key});
+  final bool withLogoutIcon;
+
+  const HeaderAppBar({
+    super.key,
+    required this.withLogoutIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      scrolledUnderElevation: 0.0,
       titleSpacing: 0,
       automaticallyImplyLeading: false,
       backgroundColor: const Color(0xFF202124),
@@ -22,7 +28,7 @@ class HeaderAppBar extends StatelessWidget {
           ApplicationHeader(paddingTop: 10, paddingBottom: 10),
         ],
       ),
-      actions: [
+      actions: withLogoutIcon ? [
         // LOGOUT BUTTON
         Tooltip(
           message: "Logout",
@@ -48,7 +54,8 @@ class HeaderAppBar extends StatelessWidget {
             ),
           ),
         ),
-      ],
+      ]
+      : [],
     );
   }
 }

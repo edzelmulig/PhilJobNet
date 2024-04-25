@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:philjobnet/employeer/screens/job_posted.dart';
+import 'package:philjobnet/employeer/screens/view_applicants.dart';
+import 'package:philjobnet/employeer/screens/view_manage/view_manage_job.dart';
 import 'package:philjobnet/services/navigation/custom_animated_navigation.dart';
 import 'package:philjobnet/widgets/button/custom_button_with_number.dart';
 import 'package:philjobnet/widgets/header/application_header_appbar.dart';
@@ -20,7 +21,7 @@ class DashboardScreen extends StatelessWidget {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-          child: const HeaderAppBar(),
+          child: const HeaderAppBar(withLogoutIcon: true),
         ),
         body: Padding(
           padding: const EdgeInsets.only(left: 13, right: 13),
@@ -41,41 +42,35 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: <Widget>[
-                      // JOB POSTED
-                      Tooltip(
-                        message: "View job posted",
-                        child: CustomButtonWithNumber(
-                          onPressed: () async {
-                            navigateWithSlideFromRight(
-                              context,
-                              const JobPostedScreen(),
-                              1.0,
-                              0.0,
-                            );
-                          },
-                          number: 10,
-                          buttonText: "Job posted",
-                          buttonColor: const Color(0xFF3499da),
-                        ),
+                      // APPLICANTS
+                      CustomButtonWithNumber(
+                        onPressed: () async {
+                          navigateWithSlideFromRight(
+                            context,
+                            const ViewApplicantsScreen(),
+                            1.0,
+                            0.0,
+                          );
+                        },
+                        number: 5,
+                        buttonText: "View applicants",
+                        buttonColor: const Color(0xFF279778),
                       ),
                       // SPACING
                       const SizedBox(height: 10),
-                      // APPLICANTS
-                      Tooltip(
-                        message: "View applicants applied",
-                        child: CustomButtonWithNumber(
-                          onPressed: () async {
-                            navigateWithSlideFromRight(
-                              context,
-                              const JobPostedScreen(),
-                              1.0,
-                              0.0,
-                            );
-                          },
-                          number: 5,
-                          buttonText: "Applicants applied",
-                          buttonColor: const Color(0xFF279778),
-                        ),
+                      // JOB POSTED
+                      CustomButtonWithNumber(
+                        onPressed: () async {
+                          navigateWithSlideFromRight(
+                            context,
+                            const ViewManageJobScreen(),
+                            1.0,
+                            0.0,
+                          );
+                        },
+                        number: 10,
+                        buttonText: "View & Manage Job Offers",
+                        buttonColor: const Color(0xFF3499da),
                       ),
                     ],
                   ),

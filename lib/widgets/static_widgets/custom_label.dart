@@ -6,6 +6,7 @@ class CustomLabel extends StatelessWidget {
   final double fontSize;
   final FontWeight fontWeight;
   final Color fontColor;
+  final double? letterSpacing;
 
   const CustomLabel({
     super.key,
@@ -13,6 +14,7 @@ class CustomLabel extends StatelessWidget {
     required this.fontSize,
     required this.fontWeight,
     required this.fontColor,
+    this.letterSpacing,
   });
 
   @override
@@ -23,6 +25,7 @@ class CustomLabel extends StatelessWidget {
         color: fontColor,
         fontSize: fontSize,
         fontWeight: fontWeight,
+        letterSpacing: letterSpacing,
       ),
     );
   }

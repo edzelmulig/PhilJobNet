@@ -6,6 +6,7 @@ import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart
 import 'package:philjobnet/widgets/fotter/application_footer.dart';
 import 'package:philjobnet/widgets/header/application_header_with_text.dart';
 import 'package:philjobnet/widgets/button/custom_button_with_icon.dart';
+import 'package:philjobnet/widgets/static_widgets/custom_label.dart';
 
 class SignUpUsingScreen extends StatefulWidget {
   // PARAMETERS NEEDED
@@ -54,8 +55,8 @@ class _SignUpUsingScreen extends State<SignUpUsingScreen> {
             const ApplicationHeaderWithText(),
             // SPACING
             const SizedBox(height: 50),
-            // TEXT: SIGN UP USING
-            _buildSignUpUsingText(),
+            // TEXT: SCREEN TITLE
+            _buildTitleText(),
             // SPACING
             const SizedBox(height: 15),
             Padding(
@@ -101,18 +102,13 @@ class _SignUpUsingScreen extends State<SignUpUsingScreen> {
   }
 }
 
-// WIDGET FOR SCREEN DESCRIPTION
-Widget _buildSignUpUsingText() {
-  return const Center(
-    child: Text(
-      "SIGN UP USING",
-      style: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w900,
-        letterSpacing: 1.3,
-        color: Color(0xFF212024),
-      ),
-    ),
+Widget _buildTitleText() {
+  return const CustomLabel(
+    textLabel: "SIGN UP USING",
+    fontSize: 20,
+    fontWeight: FontWeight.w900,
+    fontColor: Color(0xFF242424),
+    letterSpacing: 1.3,
   );
 }
 
