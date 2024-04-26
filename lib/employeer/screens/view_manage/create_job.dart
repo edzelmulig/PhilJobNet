@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:philjobnet/models/job_posting_model.dart';
+import 'package:philjobnet/services/auth/firebase_firestore_services.dart';
 import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
+import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
 import 'package:philjobnet/widgets/button/custom_button.dart';
 import 'package:philjobnet/widgets/dropdown/custom_dropdown.dart';
 import 'package:philjobnet/widgets/header/application_header_appbar.dart';
@@ -26,19 +30,27 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
   final _jobLocationController = TextEditingController();
   final _typeOfJobController = TextEditingController();
   final _jobExperienceController = TextEditingController();
+  final _minimumSalaryController = TextEditingController();
+  final _maximumSalaryController = TextEditingController();
+  final _salaryTypeController = TextEditingController();
 
   // FOCUS NODE DECLARATIONS
   final _jobPositionNode = FocusNode();
   final _companyNameNode = FocusNode();
   final _jobLocationNode = FocusNode();
   final _jobExperienceNode = FocusNode();
+  final _minimumSalaryNode = FocusNode();
+  final _maximumSalaryNode = FocusNode();
+  final _salaryTypeNode = FocusNode();
 
   // VARIABLE DECLARATION
   String? selectedCategory;
   String? selectedJobType;
+  String? selectedSalaryType;
 
   // FORM KET FOR INPUT VALIDATION
   final formKey = GlobalKey<FormState>();
+
 
   // LIST FOR JOB CATEGORY
   final List<String> jobCategories = [
@@ -62,6 +74,14 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
     'Temporary',
   ];
 
+  // LIST FOR SALARY TYPE
+  final List<String> salaryType = [
+    'Per Hour',
+    'Daily',
+    'Weekly',
+    'Monthly',
+  ];
+
   // DISPOSE
   @override
   void dispose() {
@@ -75,6 +95,21 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
     _jobPositionNode.dispose();
     _jobLocationNode.dispose();
     _jobExperienceNode.dispose();
+    _minimumSalaryController.dispose();
+    _maximumSalaryController.dispose();
+    _minimumSalaryNode.dispose();
+    _maximumSalaryNode.dispose();
+    _salaryTypeController.dispose();
+    _salaryTypeNode.dispose();
+  }
+
+  // FUNCTION THAT WILL HANDLE THE JOB POSTING
+  void jostNewJob(JobPosting newJobPosting) async {
+    await FireStoreServices.createJob(
+      context: context,
+      formKey: formKey,
+      jobPosting: newJobPosting,
+    );
   }
 
   @override
@@ -101,11 +136,11 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   // SPACING
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   // TEXT: SCREEN TITLE
                   _buildTitleText(),
                   // SPACING
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 7),
                   // LABEL: JOB CATEGORY
                   _buildLabel("Job Category"),
                   // SIZED BOX: SPACING
@@ -222,7 +257,7 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
                   CustomTextField(
                     controller: _jobExperienceController,
                     currentFocusNode: _jobExperienceNode,
-                    nextFocusNode: null,
+                    nextFocusNode: _minimumSalaryNode,
                     inputFormatters: null,
                     validatorText: "Job experience is required",
                     validator: (value) {
@@ -232,10 +267,124 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
                       return null;
                     },
                     isPassword: false,
-                    hintText: "Enter Years of Experience",
+                    hintText: "e.g 1-2 Years",
                     minLines: 1,
                     maxLines: 1,
                   ),
+                  // SPACING
+                  const SizedBox(height: 10),
+
+                  // PRICE AND DISCOUNT
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            // LABEL: MINIMUM SALARY
+                            _buildLabel("Minimum Salary"),
+
+                            // SIZED BOX: SPACING
+                            const SizedBox(height: 2),
+
+                            // TEXT FIELD: MINIMUM SALARY
+                            CustomTextField(
+                              controller: _minimumSalaryController,
+                              currentFocusNode: _minimumSalaryNode,
+                              nextFocusNode: _maximumSalaryNode,
+                              validatorText: "Input required",
+                              keyBoardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Input required";
+                                }
+                                return null;
+                              },
+                              hintText: "000",
+                              minLines: 1,
+                              maxLines: 1,
+                              isPassword: false,
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // SIZED BOX: SPACING
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        alignment: Alignment.center,
+                        width: 10,
+                        height: 20,
+                        child: const Text(
+                          "-",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            // LABEL: MAXIMUM SALARY
+                            _buildLabel("Maximum Salary"),
+
+                            // SIZED BOX: SPACING
+                            const SizedBox(height: 2),
+
+                            // TEXT FIELD: MAXIMUM SALARY
+                            CustomTextField(
+                              controller: _maximumSalaryController,
+                              currentFocusNode: _maximumSalaryNode,
+                              nextFocusNode: _salaryTypeNode,
+                              validatorText: "Input required",
+                              keyBoardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Input required";
+                                }
+                                return null;
+                              },
+                              hintText: "0,000",
+                              minLines: 1,
+                              maxLines: 1,
+                              isPassword: false,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  // SPACING
+                  const SizedBox(height: 10),
+                  // LABEL: SALARY TYPE
+                  _buildLabel("Salary Type"),
+
+                  // SIZED BOX: SPACING
+                  const SizedBox(height: 2),
+
+                  // TEXT FIELD: SALARY TYPE
+                  CustomDropDown(
+                    items: salaryType,
+                    hintText: 'Select Salary Type',
+                    onChanged: (value) {
+                      setState(() {
+                        selectedSalaryType = value;
+                        _salaryTypeController.text = value.toString();
+                      });
+                    },
+                    selectedValue: selectedSalaryType,
+                  ),
+
                   // SPACING
                   const SizedBox(height: 20),
                   // POST JOB BUTTON
@@ -275,7 +424,32 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
   Widget _buildPostButton() {
     return PrimaryCustomButton(
       buttonText: "POST",
-      onPressed: () {},
+      onPressed: () {
+        // VALIDATE INPUT IN THE CLIENTS SIDE
+        if (formKey.currentState!.validate()) {
+          // COPY THE INPUT INTO MODEL
+          JobPosting newJobPosting = JobPosting(
+            jobCategory: _jobCategoryController.text.trim(),
+            jobType: _typeOfJobController.text.trim(),
+            jobPosition: _jobPositionController.text.trim(),
+            companyName: _companyNameController.text.trim(),
+            jobLocation: _jobLocationController.text.trim(),
+            jobExperience: _jobExperienceController.text.trim(),
+            minimumSalary: int.tryParse(_minimumSalaryController.text.trim()),
+            maximumSalary: int.tryParse(_maximumSalaryController.text.trim()),
+            salaryType: _salaryTypeController.text.trim(),
+          );
+          // CALL A FUNCTION THAT WILL HANDLE ON PASSING THE DATA TO BACKEND
+          jostNewJob(newJobPosting);
+        } else {
+          // ERROR HANDLING SNACKBAR
+          customFloatingSnackBar(
+            context,
+            "Please complete all required fields correctly.",
+            const Color(0xFFe91b4f),
+          );
+        }
+      },
       buttonHeight: 55,
       buttonColor: const Color(0xFF3499da),
       fontWeight: FontWeight.w500,

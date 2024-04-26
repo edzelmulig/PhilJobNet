@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:philjobnet/auth/dynamic_home_page.dart';
 import 'package:philjobnet/auth/login_screen.dart';
+import 'package:philjobnet/models/employer_sign_up_model.dart';
 import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
 import 'package:philjobnet/utils/loading_indicator/custom_loading_indicator.dart';
@@ -81,70 +82,71 @@ class AuthService {
   static Future signUp({
     // PARAMETERS NEEDED
     required BuildContext context,
-    required email,
-    required password,
+    required GlobalKey<FormState> formKey,
+    required EmployerSignUpModel employerSignUpModel,
     required userType,
   }) async {
-    if (email.isNotEmpty && password.isNotEmpty) {
-      try {
-        // DISPLAY LOADING INDICATOR
-        showLoadingIndicator(context);
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    try {
+      // DISPLAY LOADING INDICATOR
+      showLoadingIndicator(context);
 
-        UserCredential userCredential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email.trim(),
-          password: password.trim(),
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: employerSignUpModel.email!,
+        password: employerSignUpModel.password!,
+      );
+
+      // SET USER TYPE
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({
+        'userType': userType,
+      });
+
+      // SAVE ACCOUNT INFO TO FIRESTORE
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .collection('personal_information')
+          .doc('data')
+          .set({
+        'email': employerSignUpModel.email,
+        'password': employerSignUpModel.password,
+        'userType': userType,
+      });
+
+      // DISMISS LOADING DIALOG
+      if (context.mounted) {
+        await NavigationService.pop(context);
+      }
+
+      // DISPLAY IF ACCOUNT CREATED SUCCESSFULLY
+      if (context.mounted) {
+        customFloatingSnackBar(
+          context,
+          'Account created successfully.',
+          const Color(0xFF3499da),
         );
+      }
 
-        // SET USER TYPE
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .set({
-          'userType': userType,
-        });
-
-        // SAVE ACCOUNT INFO TO FIRESTORE
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredential.user!.uid)
-            .collection('personal_information')
-            .doc('data')
-            .set({
-          'email': email,
-          'password': password,
-          'userType': userType,
-        });
-
-        // DISMISS LOADING DIALOG
-        if (context.mounted) {
-          await NavigationService.pop(context);
-        }
-
-        // DISPLAY IF ACCOUNT CREATED SUCCESSFULLY
+      // NAVIGATE TO LOGIN SCREEN
+      if (context.mounted) {
+        await NavigationService.pushReplacement(context, const LoginScreen());
+      }
+    } catch (error) {
+      // DISPLAY IF FAILED TO CREATE THE ACCOUNT
+      if (context.mounted) {
+        await NavigationService.pop(context);
         if (context.mounted) {
           customFloatingSnackBar(
             context,
-            'Account created successfully.',
-            const Color(0xFF3499da),
+            "Error signing up: ${error.toString()}",
+            const Color(0xFFe91b4f),
           );
-        }
-
-        // NAVIGATE TO LOGIN SCREEN
-        if (context.mounted) {
-          await NavigationService.pushReplacement(context, const LoginScreen());
-        }
-      } catch (error) {
-        // DISPLAY IF FAILED TO CREATE THE ACCOUNT
-        if (context.mounted) {
-          await NavigationService.pop(context);
-          if (context.mounted) {
-            customFloatingSnackBar(
-              context,
-              "Error signing up: ${error.toString()}",
-              const Color(0xFFe91b4f),
-            );
-          }
         }
       }
     }
@@ -159,7 +161,7 @@ class AuthService {
   }) async {
     if (formKey.currentState!.validate()) {
       final bool isEmailValid = EmailValidator.validate(email);
-      if(isEmailValid) {
+      if (isEmailValid) {
         try {
           await FirebaseAuth.instance.sendPasswordResetEmail(
             email: email,
@@ -175,7 +177,7 @@ class AuthService {
             );
           }
         } on FirebaseAuthException catch (error) {
-          if(context.mounted) {
+          if (context.mounted) {
             customFloatingSnackBar(
               context,
               "Error $error",

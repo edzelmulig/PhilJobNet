@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:philjobnet/auth/login_screen.dart';
+import 'package:philjobnet/models/employer_sign_up_model.dart';
 import 'package:philjobnet/services/auth/firebase_auth_services.dart';
 import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
-import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
 import 'package:philjobnet/widgets/fotter/application_footer.dart';
 import 'package:philjobnet/widgets/header/application_header_with_text.dart';
 import 'package:philjobnet/widgets/button/custom_button.dart';
@@ -48,32 +48,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   // FUNCTION THAT WILL HANDLE THE SIGN UP
-  Future<void> performSignUp() async {
-    try {
-      if (formKey.currentState!.validate()) {
-        await AuthService.signUp(
-          context: context,
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-          userType: widget.accountType.trim(),
-        );
-      } else {
-        // SHOW ERROR MESSAGE IF THERE IS PROBLEM ENCOUNTERED
-        customFloatingSnackBar(
-          context,
-          "Please double check your inputs",
-          const Color(0xFFe91b4f),
-        );
-      }
-    } catch (error) {
-      if (context.mounted) {
-        customFloatingSnackBar(
-          context,
-          "Error updating service: ${error.toString()}",
-          const Color(0xFFe91b4f),
-        );
-      }
-    }
+  Future<void> performSignUp(EmployerSignUpModel createNewAccount) async {
+    await AuthService.signUp(
+      context: context,
+      formKey: formKey,
+      employerSignUpModel: createNewAccount,
+      userType: widget.accountType,
+    );
   }
 
   @override
@@ -179,17 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // SPACING
                       const SizedBox(height: 25),
                       // LOGIN BUTTON
-                      PrimaryCustomButton(
-                        buttonText: "Create account",
-                        onPressed: performSignUp,
-                        buttonHeight: 55,
-                        buttonColor: const Color(0xFF3499da),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17,
-                        fontColor: Colors.white,
-                        elevation: 1,
-                        borderRadius: 10,
-                      ),
+                      _buildSignUpButton(),
                       // SPACING
                       const SizedBox(height: 20),
                       // FOOTER
@@ -223,6 +194,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
       fontWeight: FontWeight.w900,
       fontColor: Color(0xFF242424),
       letterSpacing: 0.5,
+    );
+  }
+
+  // WIDGET FOR BUILDING SIGN UP BUTTON
+  Widget _buildSignUpButton() {
+    return PrimaryCustomButton(
+      buttonText: "Create account",
+      onPressed: () {
+        // VALIDATE INPUT IN THE CLIENTS SIDE
+        if (formKey.currentState!.validate()) {
+          // COPY THE INPUT INTO MODEL
+          EmployerSignUpModel createNewAccount = EmployerSignUpModel(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          );
+          // CALL A FUNCTION THAT WILL HANDLE ON PASSING THE DATA TO BACKEND
+          performSignUp(createNewAccount);
+        }
+      },
+      buttonHeight: 55,
+      buttonColor: const Color(0xFF3499da),
+      fontWeight: FontWeight.w500,
+      fontSize: 17,
+      fontColor: Colors.white,
+      elevation: 1,
+      borderRadius: 10,
     );
   }
 

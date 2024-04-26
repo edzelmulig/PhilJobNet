@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:philjobnet/employeer/screens/view_manage/create_job.dart';
+import 'package:philjobnet/services/navigation/custom_animated_navigation.dart';
 import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/widgets/button/custom_button.dart';
 import 'package:philjobnet/widgets/header/application_header_appbar.dart';
@@ -35,11 +36,14 @@ class ViewManageJobScreen extends StatelessWidget {
                   child: PrimaryCustomButton(
                     buttonText: "POST NEW JOB",
                     onPressed: () {
-                      NavigationService.push(
-                          context,
-                          const CreateJobScreen(
-                            operation: 'Post ',
-                          ));
+                      navigateWithSlideFromRight(
+                        context,
+                        const CreateJobScreen(
+                          operation: 'Post ',
+                        ),
+                        0.0,
+                        1.0,
+                      );
                     },
                     buttonHeight: 55,
                     buttonColor: const Color(0xFF3499da),
