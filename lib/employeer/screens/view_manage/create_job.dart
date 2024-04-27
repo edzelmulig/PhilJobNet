@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:philjobnet/employeer/screens/view_manage/view_manage_job.dart';
 import 'package:philjobnet/models/job_posting_model.dart';
 import 'package:philjobnet/services/auth/firebase_firestore_services.dart';
-import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
+import 'package:philjobnet/utils/bottom_modal/custom_confirmation_modal.dart';
 import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
 import 'package:philjobnet/widgets/button/custom_button.dart';
 import 'package:philjobnet/widgets/dropdown/custom_dropdown.dart';
@@ -50,7 +51,6 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
 
   // FORM KET FOR INPUT VALIDATION
   final formKey = GlobalKey<FormState>();
-
 
   // LIST FOR JOB CATEGORY
   final List<String> jobCategories = [
@@ -120,7 +120,13 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
         if (_) {
           return;
         }
-        NavigationService.pop(context);
+        showConfirmationModal(
+          context,
+          'You are about to discard this post.',
+          "Discard",
+          const ViewManageJobScreen(),
+          false,
+        );
       },
       child: Scaffold(
         appBar: PreferredSize(

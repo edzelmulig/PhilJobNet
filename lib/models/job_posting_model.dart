@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class JobPosting {
   String? jobCategory;
   String? jobType;
@@ -8,6 +10,7 @@ class JobPosting {
   int? minimumSalary;
   int? maximumSalary;
   String? salaryType;
+  Timestamp? datePosted;
 
   JobPosting({
     this.jobCategory,
@@ -19,12 +22,13 @@ class JobPosting {
     this.minimumSalary,
     this.maximumSalary,
     this.salaryType,
+    this.datePosted,
   });
 
   factory JobPosting.fromMap(Map<String, dynamic> map) {
     return JobPosting(
       jobCategory: map['jobCategory'],
-      jobType: map['selectedJobType'] ?? 'NO DATA',
+      jobType: map['jobType'] ?? 'NO DATA',
       jobPosition: map['jobPosition'] ?? 'NO DATA',
       companyName: map['companyName'] ?? 'NO DATA',
       jobLocation: map['jobLocation'] ?? 'NO DATA',
@@ -32,6 +36,7 @@ class JobPosting {
       minimumSalary: map['minimumSalary'] ?? 0,
       maximumSalary: map['maximumSalary'] ?? 0,
       salaryType: map['selectedSalaryType'] ?? 'NO DATA',
+      datePosted: map['datePosted'],
     );
   }
 }

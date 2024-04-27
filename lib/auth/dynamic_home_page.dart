@@ -66,7 +66,7 @@ class _DynamicHomePage extends State<DynamicHomePage> {
 
         // PRINT USER TYPE
         final userType = snapshot.data!.get('userType');
-        debugPrint("USER TYPE: $userType");
+        // debugPrint("USER TYPE: $userType");
 
         // NAVIGATE TO DESIRED SCREEN
         if (userType == 'client') {

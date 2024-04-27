@@ -9,7 +9,7 @@ import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart
 import 'package:philjobnet/utils/loading_indicator/custom_loading_indicator.dart';
 import 'package:email_validator/email_validator.dart';
 
-class AuthService {
+  class AuthService {
   // SIGN IN AUTHENTICATION
   static Future signIn({
     // PARAMETERS NEEDED
@@ -189,6 +189,29 @@ class AuthService {
         customFloatingSnackBar(
           context,
           "Please enter a valid email address.",
+          const Color(0xFFe91b4f),
+        );
+      }
+    }
+  }
+
+  // LOGOUT AUTHENTICATION
+  static Future logout({required BuildContext context}) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      if (context.mounted) {
+        Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (BuildContext context) => const LoginScreen(),
+          ),
+          (_) => false,
+        );
+      }
+    } catch (error) {
+      if (context.mounted) {
+        customFloatingSnackBar(
+          context,
+          "Error signing out: ${error.toString()}",
           const Color(0xFFe91b4f),
         );
       }

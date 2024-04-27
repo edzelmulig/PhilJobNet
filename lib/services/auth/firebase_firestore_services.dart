@@ -7,7 +7,11 @@ import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart
 import 'package:philjobnet/utils/loading_indicator/custom_loading_indicator.dart';
 
 class FireStoreServices {
-  // CREATE NEW JOB
+  static FirebaseFirestore get firestore => FirebaseFirestore.instance;
+
+  static String get userCredential => FirebaseAuth.instance.currentUser!.uid;
+
+  // CREATE JOB
   static Future createJob({
     // PARAMETERS NEEDED
     required BuildContext context,
@@ -21,10 +25,11 @@ class FireStoreServices {
       // DISPLAY LOADING DIALOG
       showLoadingIndicator(context);
 
-      final userCredential = FirebaseAuth.instance.currentUser!.uid;
+      final Timestamp datePosted = Timestamp.now();
+
 
       // SAVING DATA TO FIRESTORE
-      await FirebaseFirestore.instance
+      await firestore
           .collection('users')
           .doc(userCredential)
           .collection('job_posting')
@@ -38,6 +43,7 @@ class FireStoreServices {
         'minimumSalary': jobPosting.minimumSalary,
         'maximumSalary': jobPosting.maximumSalary,
         'salaryType': jobPosting.salaryType,
+        'datePosted': datePosted,
       });
 
       // IF POSTING JOB IS SUCCESSFUL
@@ -67,6 +73,40 @@ class FireStoreServices {
           NavigationService.pop(context);
         }
       }
+    }
+  }
+
+  // READ JOBS
+
+  // DELETE JOB
+  // static Future deleteJob({
+  //   required BuildContext context,
+  //   required String jobID,
+  // }) async {
+  //
+  // };
+
+  // STREAM TO GET USER'S JOB POSTED
+  Stream<QuerySnapshot<Map<String, dynamic>>> getPostedJobs() {
+    return firestore
+        .collection('users')
+        .doc(userCredential)
+        .collection('job_posting')
+        .snapshots();
+  }
+
+  // COUNT JOB POSTED
+  static countJobs() async {
+    try {
+      QuerySnapshot querySnapshot = await firestore.collection('users').doc(
+          userCredential).collection('job_posting').get();
+
+      // RETURN COUNT OF JOB POSTED
+      return querySnapshot.docs.length;
+
+    } catch (error) {
+      // HANDLE ERROR
+      return 0;
     }
   }
 }
