@@ -12,7 +12,9 @@ import 'package:philjobnet/widgets/header/application_header_appbar.dart';
 import 'package:philjobnet/widgets/static_widgets/custom_no_data_found.dart';
 
 class ViewManageJobScreen extends StatelessWidget {
-  const ViewManageJobScreen({super.key});
+  final String? jobID;
+
+  const ViewManageJobScreen({super.key, this.jobID,});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,7 @@ class ViewManageJobScreen extends StatelessWidget {
                         //final display = snapshot.data!.docs[index].data();
                         //debugPrint("index: $index, $display");
                         final jobData = snapshot.data!.docs[index].data()
-                            as Map<String, dynamic>;
+                        as Map<String, dynamic>;
                         final data = snapshot.data!.docs[index];
                         final jobID = data.id;
                         final jobPosting = JobPosting.fromMap(jobData);
@@ -101,8 +103,9 @@ class ViewManageJobScreen extends StatelessWidget {
                     onPressed: () {
                       navigateWithSlideFromRight(
                         context,
-                        const CreateJobScreen(
-                          operation: 'Post ',
+                        CreateJobScreen(
+                          operation: 'Post',
+                          jobID: jobID,
                         ),
                         0.0,
                         1.0,

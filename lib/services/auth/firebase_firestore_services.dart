@@ -17,6 +17,8 @@ class FireStoreServices {
     required BuildContext context,
     required GlobalKey<FormState> formKey,
     required JobPosting jobPosting,
+    required String operation,
+    String? jobID,
   }) async {
     if (!formKey.currentState!.validate()) {
       return;
@@ -25,15 +27,10 @@ class FireStoreServices {
       // DISPLAY LOADING DIALOG
       showLoadingIndicator(context);
 
+      // INITIALIZE TIMESTAMP EVERY JOB POSTED/UPDATED
       final Timestamp datePosted = Timestamp.now();
 
-
-      // SAVING DATA TO FIRESTORE
-      await firestore
-          .collection('users')
-          .doc(userCredential)
-          .collection('job_posting')
-          .add({
+      var jobData = {
         'jobCategory': jobPosting.jobCategory,
         'jobType': jobPosting.jobType,
         'jobPosition': jobPosting.jobPosition,
@@ -44,7 +41,25 @@ class FireStoreServices {
         'maximumSalary': jobPosting.maximumSalary,
         'salaryType': jobPosting.salaryType,
         'datePosted': datePosted,
-      });
+      };
+
+      // DETERMINE WHETHER TO ADD OR UPDATE DATA
+      if(operation == 'Post') {
+        await firestore
+            .collection('users')
+            .doc(userCredential)
+            .collection('job_posting')
+            .add(jobData);
+      } else if(operation == 'Update' && jobID != null){
+        await firestore
+            .collection('users')
+            .doc(userCredential)
+            .collection('job_posting')
+            .doc(jobID)
+            .set(jobData, SetOptions(merge: true));
+      }
+
+
 
       // IF POSTING JOB IS SUCCESSFUL
       if (context.mounted) {
@@ -53,7 +68,7 @@ class FireStoreServices {
           NavigationService.pop(context);
           customFloatingSnackBar(
             context,
-            'Service created successfully.',
+            'Job successfully created and posted.',
             const Color(0xFF3499da),
           );
         }
@@ -79,12 +94,52 @@ class FireStoreServices {
   // READ JOBS
 
   // DELETE JOB
-  // static Future deleteJob({
-  //   required BuildContext context,
-  //   required String jobID,
-  // }) async {
-  //
-  // };
+  static Future deleteJob({
+    required BuildContext context,
+    required String jobID,
+  }) async {
+    try {
+      // DISPLAY LOADING DIALOG
+      showLoadingIndicator(context);
+
+      // DELETE THE JOB POSTED
+      DocumentReference documentReference = firestore
+          .collection('users')
+          .doc(userCredential)
+          .collection('job_posting')
+          .doc(jobID);
+
+      // DELETE THE JOB
+      await documentReference.delete();
+
+      // IF DELETING POSTED JOB IS SUCCESSFUL
+      if (context.mounted) {
+        // DISMISS LOADING DIALOG
+        if (context.mounted) {
+          NavigationService.pop(context);
+          customFloatingSnackBar(
+            context,
+            'Job removed successfully!',
+            const Color(0xFF3499da),
+          );
+        }
+      }
+    } catch (error) {
+      // ERROR HANDLING SNACKBAR
+      if (context.mounted) {
+        customFloatingSnackBar(
+          context,
+          "Error updating service: ${error.toString()}",
+          const Color(0xFFe91b4f),
+        );
+        // DISMISS LOADING DIALOG
+        if (context.mounted) {
+          NavigationService.pop(context);
+        }
+      }
+    }
+  }
+
 
   // STREAM TO GET USER'S JOB POSTED
   Stream<QuerySnapshot<Map<String, dynamic>>> getPostedJobs() {
@@ -92,6 +147,7 @@ class FireStoreServices {
         .collection('users')
         .doc(userCredential)
         .collection('job_posting')
+        .orderBy('datePosted', descending: true)
         .snapshots();
   }
 
@@ -103,7 +159,6 @@ class FireStoreServices {
 
       // RETURN COUNT OF JOB POSTED
       return querySnapshot.docs.length;
-
     } catch (error) {
       // HANDLE ERROR
       return 0;

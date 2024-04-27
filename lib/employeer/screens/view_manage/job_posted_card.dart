@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:philjobnet/employeer/screens/view_manage/view_manage_job.dart';
 import 'package:philjobnet/utils/dialog/custom_show_dialog.dart';
 
 class JobPostedCard extends StatefulWidget {
@@ -22,14 +21,15 @@ class _JobPostedCardState extends State<JobPostedCard> {
   final jobTypeColorMap = {
     "Part Time": const Color(0xFF3499da).withOpacity(0.3),
     "Full Time": const Color(0xFF279778).withOpacity(0.3),
-    "Contract": const Color(0xFFebebc2).withOpacity(0.3),
+    "Contract": Colors.orange.withOpacity(0.3),
     "Freelance": const Color(0xFF637a7a).withOpacity(0.3),
-    "Internship": const Color(0xFFc6d7d7).withOpacity(0.3),
+    "Internship": Colors.grey,
     "Temporary": const Color(0xFFF83333).withOpacity(0.3),
   };
 
   @override
   Widget build(BuildContext context) {
+    // FORMAT THE TimeStamp INTO READABLE FORM
     final Timestamp datePosted = widget.jobPosting.datePosted;
     String formattedDate = DateFormat('MMMM d, y').format(datePosted.toDate());
 
@@ -53,15 +53,6 @@ class _JobPostedCardState extends State<JobPostedCard> {
                 jobID: widget.jobID,
                 jobPosting: widget.jobPosting,
                 backGroundColor: Colors.white,
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const ViewManageJobScreen();
-                      },
-                    ),
-                  );
-                },
               );
             },
           );
@@ -97,20 +88,28 @@ class _JobPostedCardState extends State<JobPostedCard> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Container(
+          width: 90,
           margin: const EdgeInsets.only(right: 10),
-          padding: const EdgeInsets.only(left: 5, right: 5),
+          padding: const EdgeInsets.only(
+            left: 10,
+            right: 10,
+            top: 2,
+            bottom: 2,
+          ),
           decoration: BoxDecoration(
             color: jobTypeColorMap[widget.jobPosting.jobType],
             borderRadius: BorderRadius.circular(3),
           ),
-          child: Text(
-            widget.jobPosting.jobType,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF3C3C40),
+          child: Center(
+            child: Text(
+              widget.jobPosting.jobType,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF3C3C40),
+              ),
             ),
           ),
         ),
@@ -122,7 +121,7 @@ class _JobPostedCardState extends State<JobPostedCard> {
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 15.5,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w500,
                 color: Color(0xFF3C3C40),
               ),
             ),
@@ -163,7 +162,7 @@ class _JobPostedCardState extends State<JobPostedCard> {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: FontWeight.normal,
             color: Color(0xFF3C3C40),
           ),

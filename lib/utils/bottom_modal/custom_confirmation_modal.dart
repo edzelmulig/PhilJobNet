@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:philjobnet/services/auth/firebase_auth_services.dart';
 import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 
-// MODAL BOTTOM FOR ACTION CONFIRMATION
+// LOGOUT CONFIRMATION MODAL
 void showConfirmationModal(
   BuildContext context,
   String textReminder,
   String textAction,
   Widget destinationScreen,
   bool isLogout,
+  VoidCallback onConfirmed,
 ) {
   showModalBottomSheet(
     shape: const RoundedRectangleBorder(
@@ -49,13 +50,16 @@ void showConfirmationModal(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                   onPressed: () {
-                    if(isLogout) {
+                    if (isLogout) {
                       AuthService.logout(context: context);
                     } else {
+                      onConfirmed();
                       // POP MODAL
                       NavigationService.pop(context);
+
                       // POP CURRENT SCREEN
                       NavigationService.pop(context);
+
                     }
                   },
                   style: ElevatedButton.styleFrom(

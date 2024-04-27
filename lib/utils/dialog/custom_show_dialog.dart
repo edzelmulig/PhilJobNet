@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:philjobnet/employeer/screens/view_manage/create_job.dart';
+import 'package:philjobnet/employeer/screens/view_manage/view_manage_job.dart';
+import 'package:philjobnet/services/auth/firebase_firestore_services.dart';
+import 'package:philjobnet/services/navigation/custom_animated_navigation.dart';
+import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
+import 'package:philjobnet/utils/bottom_modal/custom_confirmation_modal.dart';
 import 'package:philjobnet/widgets/button/custom_button.dart';
 
 // ALERT DIALOG CUSTOM CLASS
@@ -6,14 +12,12 @@ class CustomAlertDialog extends StatelessWidget {
   final String jobID;
   final dynamic jobPosting;
   final Color backGroundColor;
-  final VoidCallback onPressed;
 
   const CustomAlertDialog({
     super.key,
     required this.jobID,
     required this.jobPosting,
     required this.backGroundColor,
-    required this.onPressed,
   });
 
   @override
@@ -40,7 +44,19 @@ class CustomAlertDialog extends StatelessWidget {
             // UPDATE
             PrimaryCustomButton(
               buttonText: "Update",
-              onPressed: onPressed,
+              onPressed: () {
+                NavigationService.pop(context);
+                navigateWithSlideFromRight(
+                  context,
+                  CreateJobScreen(
+                    operation: 'Update',
+                    jobPosting: jobPosting,
+                    jobID: jobID,
+                  ),
+                  0.0,
+                  1.0,
+                );
+              },
               buttonHeight: 55,
               buttonColor: const Color(0xFF279778),
               fontWeight: FontWeight.w500,
@@ -53,7 +69,21 @@ class CustomAlertDialog extends StatelessWidget {
             // DELETE
             PrimaryCustomButton(
               buttonText: "Delete",
-              onPressed: onPressed,
+              onPressed: () {
+                showConfirmationModal(
+                  context,
+                  "Are you sure you want to delete this posted job",
+                  'Delete',
+                  const ViewManageJobScreen(),
+                  false,
+                  () {
+                    FireStoreServices.deleteJob(
+                      context: context,
+                      jobID: jobID,
+                    );
+                  },
+                );
+              },
               buttonHeight: 55,
               buttonColor: const Color(0xFFe91b4f),
               fontWeight: FontWeight.w500,

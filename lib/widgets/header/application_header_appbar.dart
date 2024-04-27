@@ -46,6 +46,7 @@ class HeaderAppBar extends StatelessWidget {
                         "Logout",
                         const LoginScreen(),
                         true,
+                        () {},
                       );
                     },
                     icon: const ImageIcon(

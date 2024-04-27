@@ -35,7 +35,7 @@ class JobPosting {
       jobExperience: map['jobExperience'] ?? 'NO DATA',
       minimumSalary: map['minimumSalary'] ?? 0,
       maximumSalary: map['maximumSalary'] ?? 0,
-      salaryType: map['selectedSalaryType'] ?? 'NO DATA',
+      salaryType: map['salaryType'] ?? 'NO DATA',
       datePosted: map['datePosted'],
     );
   }

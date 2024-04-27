@@ -13,10 +13,14 @@ import 'package:philjobnet/widgets/text_field/custom_text_field.dart';
 
 class CreateJobScreen extends StatefulWidget {
   final String operation;
+  final JobPosting? jobPosting;
+  final String? jobID;
 
   const CreateJobScreen({
     super.key,
     required this.operation,
+    this.jobPosting,
+    this.jobID,
   });
 
   @override
@@ -82,10 +86,32 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
     'Monthly',
   ];
 
+  // INITIALIZATION
+  @override
+  void initState() {
+    super.initState();
+    if (widget.jobPosting != null) {
+      setState(() {
+        _jobPositionController.text = widget.jobPosting!.jobPosition!;
+        _companyNameController.text = widget.jobPosting!.companyName!;
+        _jobLocationController.text = widget.jobPosting!.jobLocation!;
+        _jobExperienceController.text = widget.jobPosting!.jobExperience!;
+        _minimumSalaryController.text =
+            widget.jobPosting!.minimumSalary!.toString();
+        _maximumSalaryController.text =
+            widget.jobPosting!.maximumSalary!.toString();
+
+        // Update dropdown selection state based on jobPosting data
+        selectedCategory = widget.jobPosting!.jobCategory!;
+        selectedJobType = widget.jobPosting!.jobType!;
+        selectedSalaryType = widget.jobPosting!.salaryType!;
+      });
+    }
+  }
+
   // DISPOSE
   @override
   void dispose() {
-    super.dispose();
     _jobCategoryController.dispose();
     _typeOfJobController.dispose();
     _jobPositionController.dispose();
@@ -101,14 +127,17 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
     _maximumSalaryNode.dispose();
     _salaryTypeController.dispose();
     _salaryTypeNode.dispose();
+    super.dispose();
   }
 
   // FUNCTION THAT WILL HANDLE THE JOB POSTING
-  void jostNewJob(JobPosting newJobPosting) async {
+  void postNewJob(JobPosting newJobPosting) async {
     await FireStoreServices.createJob(
       context: context,
       formKey: formKey,
       jobPosting: newJobPosting,
+      operation: widget.operation,
+      jobID: widget.jobID,
     );
   }
 
@@ -126,6 +155,7 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
           "Discard",
           const ViewManageJobScreen(),
           false,
+          () {},
         );
       },
       child: Scaffold(
@@ -144,7 +174,7 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
                   // SPACING
                   const SizedBox(height: 20),
                   // TEXT: SCREEN TITLE
-                  _buildTitleText(),
+                  _buildTitleText(widget.operation),
                   // SPACING
                   const SizedBox(height: 7),
                   // LABEL: JOB CATEGORY
@@ -158,6 +188,11 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
                     onChanged: (value) {
                       setState(() {
                         selectedCategory = value;
+                        _jobCategoryController.text = value.toString();
+                      });
+                    },
+                    onSaved: (value) {
+                      setState(() {
                         _jobCategoryController.text = value.toString();
                       });
                     },
@@ -176,6 +211,11 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
                     onChanged: (value) {
                       setState(() {
                         selectedJobType = value;
+                        _typeOfJobController.text = value.toString();
+                      });
+                    },
+                    onSaved: (value) {
+                      setState(() {
                         _typeOfJobController.text = value.toString();
                       });
                     },
@@ -388,13 +428,23 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
                         _salaryTypeController.text = value.toString();
                       });
                     },
+                    onSaved: (value) {
+                      setState(() {
+                        _salaryTypeController.text = value.toString();
+                      });
+                    },
                     selectedValue: selectedSalaryType,
                   ),
 
                   // SPACING
                   const SizedBox(height: 20),
                   // POST JOB BUTTON
-                  _buildPostButton(),
+                  _buildPostButton(
+                    widget.operation,
+                    selectedCategory,
+                    selectedJobType,
+                    selectedSalaryType,
+                  ),
                   // SPACING
                   const SizedBox(height: 10),
                 ],
@@ -417,36 +467,41 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
   }
 
   // WIDGET FOR TITLE TEXT
-  Widget _buildTitleText() {
-    return const CustomLabel(
-      textLabel: "Post new job",
+  Widget _buildTitleText(String operation) {
+    return CustomLabel(
+      textLabel: "$operation Job Information",
       fontSize: 25,
       fontWeight: FontWeight.w900,
-      fontColor: Color(0xFF242424),
+      fontColor: const Color(0xFF242424),
     );
   }
 
   // WIDGET FOR POST BUTTON
-  Widget _buildPostButton() {
+  Widget _buildPostButton(
+    String operation,
+    String? jobCategory,
+    String? jobType,
+    String? salaryType,
+  ) {
     return PrimaryCustomButton(
-      buttonText: "POST",
+      buttonText: operation,
       onPressed: () {
         // VALIDATE INPUT IN THE CLIENTS SIDE
         if (formKey.currentState!.validate()) {
           // COPY THE INPUT INTO MODEL
           JobPosting newJobPosting = JobPosting(
-            jobCategory: _jobCategoryController.text.trim(),
-            jobType: _typeOfJobController.text.trim(),
+            jobCategory: jobCategory,
+            jobType: jobType,
             jobPosition: _jobPositionController.text.trim(),
             companyName: _companyNameController.text.trim(),
             jobLocation: _jobLocationController.text.trim(),
             jobExperience: _jobExperienceController.text.trim(),
             minimumSalary: int.tryParse(_minimumSalaryController.text.trim()),
             maximumSalary: int.tryParse(_maximumSalaryController.text.trim()),
-            salaryType: _salaryTypeController.text.trim(),
+            salaryType: salaryType,
           );
           // CALL A FUNCTION THAT WILL HANDLE ON PASSING THE DATA TO BACKEND
-          jostNewJob(newJobPosting);
+          postNewJob(newJobPosting);
         } else {
           // ERROR HANDLING SNACKBAR
           customFloatingSnackBar(

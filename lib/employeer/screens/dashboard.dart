@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:philjobnet/employeer/screens/view_applicants.dart';
@@ -32,8 +33,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           preferredSize: Size.fromHeight(AppBar().preferredSize.height),
           child: const HeaderAppBar(withLogoutIcon: true),
         ),
-        body: FutureBuilder<dynamic>(
-          future: FireStoreServices.countJobs(),
+        body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: FireStoreServices().getPostedJobs(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               Center(
@@ -56,55 +57,60 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   "Error: ${snapshot.hasError}",
                 ),
               );
-            } else {
-              return Padding(
-                padding: const EdgeInsets.only(left: 13, right: 13),
-                child: Column(
-                  children: <Widget>[
-                    // SPACER
-                    const Spacer(),
+            }
 
-                    // BUTTONS
-                    Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFe8f3f8),
-                        borderRadius: BorderRadius.circular(15),
+            if (!snapshot.hasData || snapshot.data == null) {
+              return const Center(child: Text("No data available"));
+            }
+
+            int jobCount = snapshot.data!.docs.length;
+            return Padding(
+              padding: const EdgeInsets.only(left: 13, right: 13),
+              child: Column(
+                children: <Widget>[
+                  // SPACER
+                  const Spacer(),
+
+                  // BUTTONS
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFe8f3f8),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 12,
+                        top: 12,
+                        right: 12,
+                        bottom: 12,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 12,
-                          top: 12,
-                          right: 12,
-                          bottom: 12,
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            // APPLICANTS
-                            _buildButton(
-                              snapshot.data ?? 0,
-                              const ViewApplicantsScreen(),
-                              const Color(0xFF279778),
-                              "View applicants",
-                            ),
-                            // SPACING
-                            const SizedBox(height: 10),
-                            // JOB POSTED
-                            _buildButton(
-                              snapshot.data ?? 0,
-                              const ViewManageJobScreen(),
-                              const Color(0xFF3499da),
-                              "Manage Job Offers",
-                            ),
-                          ],
-                        ),
+                      child: Column(
+                        children: <Widget>[
+                          // APPLICANTS
+                          _buildButton(
+                            jobCount,
+                            const ViewApplicantsScreen(),
+                            const Color(0xFF279778),
+                            "View applicants",
+                          ),
+                          // SPACING
+                          const SizedBox(height: 10),
+                          // JOB POSTED
+                          _buildButton(
+                            jobCount,
+                            const ViewManageJobScreen(),
+                            const Color(0xFF3499da),
+                            "Manage Job Offers",
+                          ),
+                        ],
                       ),
                     ),
-                    // SPACING
-                    const SizedBox(height: 15),
-                  ],
-                ),
-              );
-            }
+                  ),
+                  // SPACING
+                  const SizedBox(height: 15),
+                ],
+              ),
+            );
           },
         ),
       ),

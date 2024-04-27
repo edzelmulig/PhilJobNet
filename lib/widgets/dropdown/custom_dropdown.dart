@@ -6,6 +6,7 @@ class CustomDropDown extends StatefulWidget {
   final List<String> items;
   final String hintText;
   final Function(String?) onChanged;
+  final Function(String?) onSaved;
   final String? selectedValue;
 
   const CustomDropDown({
@@ -13,6 +14,7 @@ class CustomDropDown extends StatefulWidget {
     required this.items,
     required this.hintText,
     required this.onChanged,
+    required this.onSaved,
     required this.selectedValue,
   });
 
@@ -21,6 +23,13 @@ class CustomDropDown extends StatefulWidget {
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
+  String? selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedValue = widget.selectedValue;
+  }
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField2(
@@ -90,7 +99,9 @@ class _CustomDropDownState extends State<CustomDropDown> {
         }
         return null;
       },
+      value: selectedValue,
       onChanged: widget.onChanged,
+      onSaved: widget.onSaved,
       iconStyleData: const IconStyleData(
         icon: Padding(
           padding: EdgeInsets.only(right: 5),
