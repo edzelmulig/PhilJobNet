@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:philjobnet/employeer/screens/view_applicants.dart';
@@ -33,8 +32,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           preferredSize: Size.fromHeight(AppBar().preferredSize.height),
           child: const HeaderAppBar(withLogoutIcon: true),
         ),
-        body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: FireStoreServices().getPostedJobs(),
+        body: StreamBuilder<int>(
+          stream: FireStoreServices().countPostedJobs(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               Center(
@@ -63,7 +62,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               return const Center(child: Text("No data available"));
             }
 
-            int jobCount = snapshot.data!.docs.length;
+            int jobCount = snapshot.data!;
             return Padding(
               padding: const EdgeInsets.only(left: 13, right: 13),
               child: Column(

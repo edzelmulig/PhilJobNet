@@ -151,17 +151,13 @@ class FireStoreServices {
         .snapshots();
   }
 
-  // COUNT JOB POSTED
-  static countJobs() async {
-    try {
-      QuerySnapshot querySnapshot = await firestore.collection('users').doc(
-          userCredential).collection('job_posting').get();
-
-      // RETURN COUNT OF JOB POSTED
-      return querySnapshot.docs.length;
-    } catch (error) {
-      // HANDLE ERROR
-      return 0;
-    }
+  // COUNT ALL THE JOB POSTED
+  Stream<int> countPostedJobs() {
+    return firestore
+        .collection('users')
+        .doc(userCredential)
+        .collection('job_posting')
+        .snapshots()
+        .map((snapshot) => snapshot.size);  // Map each snapshot to its document count
   }
 }
