@@ -79,13 +79,17 @@ class CustomAlertDialog extends StatelessWidget {
 
   // WIDGET FOR JOB POSITION
   Widget _buildJobPosition(dynamic jobPosting) {
-    return Text(
-      "${jobPosting.jobType} ${jobPosting.jobPosition}",
-      textAlign: TextAlign.center,
-      style: const TextStyle(
-        fontSize: 15.5,
-        fontWeight: FontWeight.w700,
-        color: Color(0xFF3C3C40),
+    return SizedBox(
+      child: Text(
+        "${jobPosting.jobType} ${jobPosting.jobPosition}",
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 15.5,
+          fontWeight: FontWeight.w700,
+          color: Color(0xFF3C3C40),
+        ),
       ),
     );
   }
