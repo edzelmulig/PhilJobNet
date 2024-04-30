@@ -77,6 +77,7 @@ class CustomAlertDialog extends StatelessWidget {
                   const ViewManageJobScreen(),
                   false,
                   () {
+                    NavigationService.pop(context);
                     FireStoreServices.deleteJob(
                       context: context,
                       jobID: jobID,

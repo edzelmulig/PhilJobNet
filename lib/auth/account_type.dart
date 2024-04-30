@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:philjobnet/auth/login_screen.dart';
-import 'package:philjobnet/auth/singup_using_screen.dart';
+import 'package:philjobnet/auth/sign_in_screens/login_screen.dart';
+import 'package:philjobnet/auth/Sign_up_screens/signup_using_screen.dart';
 import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/widgets/fotter/application_footer.dart';
 import 'package:philjobnet/widgets/header/application_header.dart';

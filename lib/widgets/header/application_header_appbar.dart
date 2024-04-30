@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:philjobnet/auth/login_screen.dart';
+import 'package:philjobnet/auth/sign_in_screens/login_screen.dart';
 import 'package:philjobnet/utils/bottom_modal/custom_confirmation_modal.dart';
 import 'package:philjobnet/widgets/header/application_header.dart';
 

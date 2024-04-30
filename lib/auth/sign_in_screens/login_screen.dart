@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:philjobnet/auth/account_type.dart';
 import 'package:philjobnet/auth/forgot_password_screen.dart';
+import 'package:philjobnet/auth/sign_in_screens/login_using_number.dart';
 import 'package:philjobnet/services/auth/firebase_auth_services.dart';
 import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
@@ -185,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           foreGroundColor: const Color(0xFF3499da),
                           onPressed: () async {
                             await NavigationService.push(
-                                context, const ForgotPasswordScreen());
+                                context, const LoginUsingNumber());
                           },
                         ),
                         // DIVIDER

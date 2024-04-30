@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:philjobnet/auth/dynamic_home_page.dart';
-import 'package:philjobnet/auth/login_screen.dart';
+import 'package:philjobnet/auth/sign_in_screens/login_screen.dart';
 import 'package:philjobnet/models/employer_sign_up_model.dart';
 import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
@@ -115,6 +115,7 @@ import 'package:email_validator/email_validator.dart';
           .doc('data')
           .set({
         'email': employerSignUpModel.email,
+        'phoneNumber': employerSignUpModel.phoneNumber,
         'password': employerSignUpModel.password,
         'userType': userType,
       });

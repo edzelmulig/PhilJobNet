@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:philjobnet/auth/login_screen.dart';
-import 'package:philjobnet/auth/signup_screen.dart';
+import 'package:philjobnet/auth/Sign_up_screens/signup_using_email.dart';
+import 'package:philjobnet/auth/sign_in_screens/login_screen.dart';
 import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
 import 'package:philjobnet/widgets/fotter/application_footer.dart';
@@ -28,14 +28,27 @@ class _SignUpUsingScreen extends State<SignUpUsingScreen> {
   void updateSelected(bool value) {
     setState(() {
       isSelected = value;
-      debugPrint(isSelected.toString());
     });
   }
 
   // FUTURE FUNCTION TO CHECK IF THE TERMS IS SELECTED
-  Future proceedToSignUp() async {
-    if (isSelected) {
-      await NavigationService.push(context, SignUpScreen(accountType: widget.accountType,));
+  Future proceedToSignUp(bool isEmail) async {
+    if (isSelected && isEmail == true) {
+      await NavigationService.push(
+        context,
+        SignUp(
+          accountType: widget.accountType,
+          signUpUsing: "Email",
+        ),
+      );
+    } else if (isSelected && isEmail == false) {
+      await NavigationService.push(
+        context,
+        SignUp(
+          accountType: widget.accountType,
+          signUpUsing: "Phone number",
+        ),
+      );
     } else {
       customFloatingSnackBar(
         context,
@@ -68,7 +81,7 @@ class _SignUpUsingScreen extends State<SignUpUsingScreen> {
                     icon: Icons.email_rounded,
                     buttonText: 'Continue using Email',
                     buttonColor: const Color(0xFFe14a42),
-                    onPressed: proceedToSignUp,
+                    onPressed: () => proceedToSignUp(true),
                   ),
                   // SPACING
                   const SizedBox(height: 10),
@@ -77,7 +90,7 @@ class _SignUpUsingScreen extends State<SignUpUsingScreen> {
                     icon: Icons.phone_rounded,
                     buttonText: 'Continue using Phone number',
                     buttonColor: const Color(0xFF3499da),
-                    onPressed: proceedToSignUp,
+                    onPressed: () => proceedToSignUp(false),
                   ),
                   // SPACING
                   const SizedBox(height: 20),
@@ -114,7 +127,9 @@ Widget _buildTitleText() {
 
 // WIDGET FOR TERMS AND USE POLICY
 Widget _buildTermsAndConditions(
-    bool isSelected, Function(bool) updateSelected) {
+  bool isSelected,
+  Function(bool) updateSelected,
+) {
   return Row(
     children: <Widget>[
       // RADIO BUTTON

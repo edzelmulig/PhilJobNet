@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:philjobnet/auth/login_screen.dart';
+import 'package:philjobnet/auth/sign_in_screens/login_screen.dart';
 import 'package:philjobnet/client/home_page.dart';
 import 'package:philjobnet/employeer/navigation/bottom_navigation.dart';
 
