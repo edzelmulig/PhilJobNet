@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         // LABEL: Email/Username
-                        _buildLabel("Email/Username"),
+                        _buildLabel("Email Address"),
                         // SIZED BOX: SPACING
                         const SizedBox(height: 2),
                         // EMAIL/USERNAME TEXT FIELD
