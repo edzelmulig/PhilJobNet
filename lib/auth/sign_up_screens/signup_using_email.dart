@@ -43,13 +43,6 @@ class _SignUp extends State<SignUp> {
   // FORM KEY DECLARATION
   final formKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    super.initState();
-    debugPrint("Account type: ${widget.accountType}");
-    debugPrint("Account type: ${widget.signUpUsing}");
-  }
-
   // DISPOSE
   @override
   void dispose() {
