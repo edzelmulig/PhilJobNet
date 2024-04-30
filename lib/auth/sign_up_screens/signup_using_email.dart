@@ -57,15 +57,6 @@ class _SignUp extends State<SignUp> {
     super.dispose();
   }
 
-  // // FUNCTION TO GENERATE 6-DIGIT RANDOM NUMBER
-  // String generateRandomNumber() {
-  //   final random = Random();
-  //   String randomNumber = '';
-  //   for (int i = 0; i < 5; i++) {
-  //     randomNumber += random.nextInt(10).toString();
-  //   }
-  //   return randomNumber;
-  // }
 
   // FUNCTION THAT WILL HANDLE THE SIGN UP
   Future<void> performSignUp(EmployerSignUpModel createNewAccount) async {
@@ -76,36 +67,6 @@ class _SignUp extends State<SignUp> {
       userType: widget.accountType,
     );
   }
-
-  // FUNCTION THAT WILL SEND THE OTP
-  // Future<void> sentOTP(String? phoneNumber, String otpMessage) async {
-  //   String receiverNumber = '63${phoneNumber!.substring(1)}';
-  //   debugPrint("FINAL NUMBER: $receiverNumber");
-  //   var url = Uri.parse('https://app.philsms.com/api/v3/sms/send');
-  //   var headers = {
-  //     'Authorization': smsAPI,
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json',
-  //   };
-  //   var body = jsonEncode({
-  //     "recipient": receiverNumber,
-  //     "sender_id": "PhilSMS",
-  //     "type": 'plain',
-  //     "message": otpMessage,
-  //   });
-  //
-  //   try {
-  //     var response = await http.post(url, headers: headers, body: body);
-  //     if (response.statusCode == 200) {
-  //       print('SMS sent successfully: ${response.body}');
-  //       debugPrint("SENT GENERATED NUMBER: $otpMessage");
-  //     } else {
-  //       print('Failed to send SMS: ${response.body}');
-  //     }
-  //   } catch (error) {
-  //     debugPrint('Error sending OTP: $error');
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
