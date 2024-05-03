@@ -17,11 +17,11 @@ class AccountType extends StatefulWidget {
 class _AccountTypeState extends State<AccountType> {
   bool isClientSelected = true;
   bool isProviderSelected = false;
-  String selectedRole = 'client';
+  String _selectedRole = 'Client';
 
   @override
   void dispose() {
-    selectedRole = 'client';
+    _selectedRole = 'Client';
     super.dispose();
   }
 
@@ -48,10 +48,10 @@ class _AccountTypeState extends State<AccountType> {
                   // CLIENT
                   CustomRoleSelection(
                     buttonText: 'I am looking for work',
-                    isSelected: selectedRole == 'client' ? true : false,
+                    isSelected: _selectedRole == 'Client' ? true : false,
                     onPressed: () {
                       setState(() {
-                        selectedRole = 'client';
+                        _selectedRole = 'Client';
                       });
                     },
                   ),
@@ -60,10 +60,10 @@ class _AccountTypeState extends State<AccountType> {
                   // EMPLOYER
                   CustomRoleSelection(
                     buttonText: 'I am offering employment',
-                    isSelected: selectedRole == 'employer' ? true : false,
+                    isSelected: _selectedRole == 'Employer' ? true : false,
                     onPressed: () {
                       setState(() {
-                        selectedRole = 'employer';
+                        _selectedRole = 'Employer';
                       });
                     },
                   ),
@@ -77,7 +77,7 @@ class _AccountTypeState extends State<AccountType> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SignUpUsingScreen(accountType: selectedRole),
+                              SignUpUsingScreen(accountType: _selectedRole)
                         ),
                       );
                     },

@@ -102,7 +102,7 @@ class _SignUp extends State<SignUp> {
                         controller: _emailController,
                         currentFocusNode: _emailNode,
                         nextFocusNode:
-                            isEmail ? _passwordNode : _phoneNumberNode,
+                        isEmail ? _passwordNode : _phoneNumberNode,
                         inputFormatters: null,
                         validatorText: "Email address is required",
                         validator: (value) {
@@ -183,7 +183,7 @@ class _SignUp extends State<SignUp> {
                         nextFocusNode: null,
                         inputFormatters: null,
                         validatorText:
-                            "Password and Confirm Password does not match",
+                        "Password and Confirm Password does not match",
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Password cannot be empty";
@@ -231,11 +231,11 @@ class _SignUp extends State<SignUp> {
 
   // WIDGET FOR SCREEN TITLE
   Widget _buildTitleText() {
-    return const CustomLabel(
-      textLabel: "Employer information",
+    return CustomLabel(
+      textLabel: "${widget.accountType} information",
       fontSize: 25,
       fontWeight: FontWeight.w900,
-      fontColor: Color(0xFF242424),
+      fontColor: const Color(0xFF242424),
       letterSpacing: 0.5,
     );
   }

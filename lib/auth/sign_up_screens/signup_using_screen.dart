@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:philjobnet/auth/Sign_up_screens/signup_using_email.dart';
 import 'package:philjobnet/auth/sign_in_screens/login_screen.dart';
+import 'package:philjobnet/auth/sign_up_screens/signup.dart';
 import 'package:philjobnet/services/navigation/custom_screen_navigation.dart';
 import 'package:philjobnet/utils/floating_snackbar/custom_floating_snackbar.dart';
 import 'package:philjobnet/widgets/fotter/application_footer.dart';
@@ -60,6 +60,7 @@ class _SignUpUsingScreen extends State<SignUpUsingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("ROLE: ${widget.accountType}");
     return SafeArea(
       child: Scaffold(
         body: Column(

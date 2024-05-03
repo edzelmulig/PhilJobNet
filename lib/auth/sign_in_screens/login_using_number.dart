@@ -106,11 +106,13 @@ class _LoginUsingNumberState extends State<LoginUsingNumber> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Phone number is required";
+                        } else if (value.length != 11) {
+                          return "Invalid phone number. Number must be 11 digits";
                         }
                         return null;
                       },
                       isPassword: false,
-                      hintText: "Enter your phone number",
+                      hintText: "e.g 09123456789",
                       minLines: 1,
                       maxLines: 1,
                     ),

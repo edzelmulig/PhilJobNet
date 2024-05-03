@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:philjobnet/auth/sign_in_screens/login_screen.dart';
-import 'package:philjobnet/client/home_page.dart';
+import 'package:philjobnet/client/account_setup/home_page.dart';
 import 'package:philjobnet/employeer/navigation/bottom_navigation.dart';
 
 class DynamicHomePage extends StatefulWidget {
@@ -66,12 +66,19 @@ class _DynamicHomePage extends State<DynamicHomePage> {
 
         // PRINT USER TYPE
         final userType = snapshot.data!.get('userType');
-        // debugPrint("USER TYPE: $userType");
+        final isFirstTime = snapshot.data!.get('firstTime');
+         debugPrint("FIRST TIME: $isFirstTime");
 
         // NAVIGATE TO DESIRED SCREEN
-        if (userType == 'client') {
+        if (userType == 'Client' && isFirstTime == true) {
           return const HomePage();
-        } else if (userType == 'employer') {
+        }
+        if (userType == 'Client' && isFirstTime == false) {
+          return const Center(
+            child: Text('NOT FIRST TIME'),
+          );
+        }
+        else if (userType == 'Employer') {
           return const BottomNavigation();
         } else {
           // DISPLAY IF USER TYPE IS UNKNOWN

@@ -105,6 +105,7 @@ import 'package:email_validator/email_validator.dart';
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .set({
         'userType': userType,
+        'firstTime': true,
       });
 
       // SAVE ACCOUNT INFO TO FIRESTORE
